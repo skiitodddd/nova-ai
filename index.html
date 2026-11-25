@@ -1,993 +1,488 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080808">
-<title>NOVA AI — Digital Studio</title>
-<meta name="description" content="NOVA AI — Création de sites web, interfaces digitales et automatisations.">
+<meta name="theme-color" content="#08080d">
+<meta name="description" content="NOVA AI — Agence digitale : création de sites web, design et solutions numériques.">
+<title>NOVA AI — Digital Agency</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg:#080808;
-  --surface:#111;
-  --surface2:#171717;
-  --text:#f5f5f5;
-  --muted:#929292;
-  --accent:#a78bfa;
-  --accent2:#6d5dfc;
+  --bg:#08080d;
+  --surface:#11111a;
+  --surface2:#171724;
+  --text:#f7f6ff;
+  --muted:#9998ad;
+  --purple:#9465ff;
+  --gradient:linear-gradient(110deg,#a77bff,#6b65ff);
   --border:rgba(255,255,255,.09);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
-  overflow-x:hidden;
-}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-button,input,textarea{font:inherit}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 .container{width:min(1160px,90%);margin:auto}
-.section{padding:110px 0}
-.section-label{
-  color:var(--accent);
-  text-transform:uppercase;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:2px;
-  margin-bottom:18px;
-}
-.section-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(34px,5vw,58px);
-  letter-spacing:-2px;
-  line-height:1.08;
-}
-.section-description{
-  color:var(--muted);
-  max-width:560px;
-  line-height:1.8;
-  margin-top:18px;
-}
-.gradient-text{
-  background:linear-gradient(100deg,#fff,#a78bfa 60%,#7765ff);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:15px 23px;
-  border-radius:9px;
-  background:var(--accent);
-  color:#090909;
-  font-weight:700;
-  font-size:14px;
-  transition:.25s;
-  border:1px solid transparent;
-  cursor:pointer;
-}
-.btn:hover{transform:translateY(-3px);background:#c4b5fd;box-shadow:0 10px 35px #a78bfa30}
-.btn-outline{
-  background:transparent;
-  border-color:var(--border);
-  color:white;
-}
-.btn-outline:hover{background:#ffffff0c;border-color:#a78bfa}
+.gradient-text{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* NAVBAR */
-.navbar{
-  position:fixed;
-  top:0;left:0;width:100%;
-  z-index:1000;
-  background:#080808d9;
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-}
-.nav-content{
-  height:78px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:24px;
-  font-weight:700;
-  letter-spacing:-1px;
-}
-.logo span{color:var(--accent)}
-.nav-links{display:flex;align-items:center;gap:30px}
-.nav-links a{
-  font-size:13px;
-  color:#aaa;
-  transition:.2s;
-}
-.nav-links a:hover,.nav-links a.active{color:white}
-.nav-cta{padding:11px 17px;font-size:12px}
-.menu-toggle{
-  display:none;
-  background:none;
-  color:white;
-  border:0;
-  font-size:25px;
-  cursor:pointer;
-}
+header{position:fixed;top:0;width:100%;z-index:100;background:rgba(8,8,13,.85);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Space Grotesk';font-size:25px;font-weight:700;letter-spacing:-1.5px}
+.logo span{color:var(--purple)}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{font-size:13px;color:var(--muted);transition:.2s}
+.nav-links a:hover{color:white}
+.nav-cta{padding:11px 18px;background:var(--gradient);border-radius:9px;color:white!important;font-weight:700}
+.menu-toggle{display:none;background:none;border:0;color:white;font-size:26px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 22px;border-radius:10px;background:var(--gradient);color:white;font-size:13px;font-weight:700;border:1px solid transparent;transition:.25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px #875bff35}
+.btn-outline{background:rgba(255,255,255,.035);border-color:var(--border)}
+.btn-outline:hover{border-color:var(--purple)}
 
 /* HERO */
-.hero{
-  min-height:780px;
-  display:flex;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-  padding:150px 0 100px;
-}
-.hero::before{
-  content:"";
-  position:absolute;
-  width:650px;height:650px;
-  background:#7658ff;
-  opacity:.13;
-  filter:blur(160px);
-  border-radius:50%;
-  right:-180px;top:30px;
-  pointer-events:none;
-}
-.hero-content{position:relative;z-index:2;max-width:850px}
-.hero-tag{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  padding:9px 14px;
-  border:1px solid var(--border);
-  border-radius:50px;
-  color:#c8c0e8;
-  font-size:12px;
-  margin-bottom:28px;
-  background:#ffffff06;
-}
-.status-dot{
-  width:7px;height:7px;
-  border-radius:50%;
-  background:#9c85ff;
-  box-shadow:0 0 12px #9c85ff;
-}
-.hero h1{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(48px,8vw,94px);
-  line-height:.99;
-  letter-spacing:-5px;
-  font-weight:700;
-}
-.hero p{
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.8;
-  max-width:570px;
-  margin:28px 0 32px;
-}
+.hero{min-height:760px;padding:165px 0 90px;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:650px;height:650px;border-radius:50%;background:#7142e62b;filter:blur(120px);top:-200px;right:-100px}
+.hero-content{position:relative;z-index:1;max-width:800px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid #9a71ff4d;border-radius:30px;background:#875bff15;color:#c3a9ff;font-size:11px;font-weight:700;margin-bottom:27px}
+.status-dot{width:7px;height:7px;background:#a78bfa;border-radius:50%;box-shadow:0 0 12px #a78bfa}
+h1{font-family:'Space Grotesk';font-size:clamp(48px,7vw,84px);line-height:1.04;letter-spacing:-4px}
+.hero-description{color:var(--muted);font-size:16px;line-height:1.9;max-width:590px;margin:25px 0 32px}
 .hero-actions{display:flex;gap:13px;flex-wrap:wrap}
-.hero-bottom{
-  margin-top:85px;
-  display:flex;
-  gap:55px;
-  flex-wrap:wrap;
-}
-.hero-stat strong{
-  display:block;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:25px;
-}
-.hero-stat span{font-size:12px;color:var(--muted)}
+.hero-bottom{display:flex;gap:45px;margin-top:70px;flex-wrap:wrap}
+.hero-stat strong{display:block;font-family:'Space Grotesk';font-size:23px}
+.hero-stat span{color:var(--muted);font-size:12px}
 
-/* MARQUEE */
-.marquee{
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:23px 0;
-  overflow:hidden;
-  background:#ffffff03;
-}
-.marquee-track{
-  display:flex;
-  gap:65px;
-  width:max-content;
-  animation:marquee 28s linear infinite;
-}
-.marquee span{
-  color:#777;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:2px;
-  white-space:nowrap;
-}
-@keyframes marquee{to{transform:translateX(-50%)}}
+/* SECTIONS */
+section{padding:100px 0}
+.section-label{color:#ad8cff;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;margin-bottom:15px}
+.section-title{font-family:'Space Grotesk';font-size:clamp(32px,4vw,48px);letter-spacing:-1.8px;line-height:1.15}
+.section-description{color:var(--muted);line-height:1.8;max-width:590px;margin-top:17px;font-size:14px}
+.section-heading{margin-bottom:45px}
 
 /* SERVICES */
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:17px;
-  margin-top:55px;
-}
-.service-card{
-  padding:32px;
-  min-height:260px;
-  border:1px solid var(--border);
-  background:linear-gradient(145deg,#151515,#0d0d0d);
-  border-radius:15px;
-  transition:.3s;
-}
-.service-card:hover{
-  transform:translateY(-7px);
-  border-color:#a78bfa70;
-  background:#17151f;
-}
-.service-icon{
-  width:48px;height:48px;
-  display:grid;place-items:center;
-  border:1px solid #a78bfa40;
-  background:#a78bfa12;
-  color:var(--accent);
-  border-radius:12px;
-  font-size:22px;
-  margin-bottom:27px;
-}
-.service-card h3{font-size:19px;margin-bottom:13px}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.service-card{padding:29px;background:var(--surface);border:1px solid var(--border);border-radius:20px;transition:.3s}
+.service-card:hover{transform:translateY(-6px);border-color:#9b70ff70;background:#13121e}
+.service-icon{width:48px;height:48px;display:grid;place-items:center;background:#8f64ff20;border:1px solid #8f64ff40;border-radius:13px;font-size:22px;margin-bottom:23px}
+.service-card h3{font-family:'Space Grotesk';font-size:19px;margin-bottom:12px}
 .service-card p{color:var(--muted);font-size:13px;line-height:1.8}
+.service-card a{display:inline-block;margin-top:20px;font-size:12px;color:#b69aff;font-weight:700}
 
 /* ABOUT */
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:75px;
-  align-items:center;
-}
-.about-visual{
-  min-height:420px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  background:
-    radial-gradient(circle at 50% 40%,#7254ff40,transparent 45%),
-    linear-gradient(145deg,#191522,#0b0b0b);
-  display:grid;
-  place-items:center;
-  position:relative;
-  overflow:hidden;
-}
-.about-logo{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:100px;
-  font-weight:700;
-  letter-spacing:-10px;
-  text-shadow:0 0 80px #9c85ff70;
-}
-.about-logo span{color:var(--accent)}
-.about-orbit{
-  position:absolute;
-  width:280px;height:280px;
-  border:1px solid #a78bfa40;
-  border-radius:50%;
-  animation:spin 18s linear infinite;
-}
-.about-orbit:before{
-  content:"";
-  position:absolute;
-  top:25px;left:25px;
-  width:8px;height:8px;
-  background:#bba9ff;
-  border-radius:50%;
-  box-shadow:0 0 20px #a78bfa;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.about-text p{
-  color:var(--muted);
-  line-height:1.9;
-  margin:22px 0;
-}
-.about-points{display:grid;gap:14px;margin-top:25px}
-.about-point{display:flex;align-items:center;gap:12px;font-size:14px}
-.check{
-  width:22px;height:22px;
-  display:grid;place-items:center;
-  border-radius:50%;
-  background:#a78bfa20;
-  color:var(--accent);
-}
-
-/* PROCESS */
-.process-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-top:55px;
-}
-.process-card{
-  padding:27px 22px;
-  border-top:1px solid #a78bfa70;
-  background:#ffffff04;
-}
-.process-number{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:35px;
-  color:#a78bfa;
-  margin-bottom:25px;
-}
-.process-card h3{font-size:16px;margin-bottom:12px}
-.process-card p{font-size:12px;line-height:1.8;color:var(--muted)}
+.about-section,.process-section,.contact-section{background:#0c0c13}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
+.about-visual{min-height:380px;border:1px solid var(--border);border-radius:24px;background:radial-gradient(circle at 50% 40%,#8153ff45,transparent 48%),linear-gradient(145deg,#171524,#0c0c13);display:grid;place-items:center;position:relative;overflow:hidden}
+.about-symbol{font-family:'Space Grotesk';font-size:110px;font-weight:700;letter-spacing:-12px;text-shadow:0 0 70px #9d74ff80}
+.about-badge{position:absolute;bottom:22px;right:22px;background:#171624;border:1px solid var(--border);padding:13px 17px;border-radius:12px;color:#c5b2ff;font-size:11px}
+.about-copy p{color:var(--muted);line-height:1.9;font-size:14px;margin-top:18px}
+.about-points{display:grid;gap:13px;margin-top:27px}
+.about-point{display:flex;align-items:center;gap:12px;font-size:13px}
+.check{width:23px;height:23px;display:grid;place-items:center;border-radius:50%;background:#8c63ff29;color:#b69aff}
 
 /* PORTFOLIO */
-.portfolio-header{
-  display:flex;
-  align-items:end;
-  justify-content:space-between;
-  gap:25px;
-}
-.portfolio-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:22px;
-  margin-top:50px;
-}
-.project-card{
-  display:block;
-  border:1px solid var(--border);
-  border-radius:15px;
-  overflow:hidden;
-  background:#111;
-  transition:.3s;
-}
-.project-card:hover{
-  transform:translateY(-6px);
-  border-color:#a78bfa80;
-  box-shadow:0 20px 60px #0008;
-}
-.project-image{
-  height:270px;
-  padding:25px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  position:relative;
-}
-.project-image.maison{
-  background:linear-gradient(135deg,#29231e,#76604c);
-}
-.project-image.assistant{
-  background:linear-gradient(135deg,#111d38,#443b83);
-}
-.project-image.automation{
-  background:linear-gradient(135deg,#102b2a,#27635c);
-}
-.project-image.concept{
-  background:linear-gradient(135deg,#30203b,#75558c);
-}
-.mock-window{
-  width:90%;
-  height:190px;
-  background:#f5f1ea;
-  color:#211f1d;
-  border-radius:7px;
-  padding:15px;
-  box-shadow:0 20px 50px #0005;
-  transform:rotate(-2deg);
-  transition:.4s;
-}
-.project-card:hover .mock-window{transform:rotate(0) scale(1.04)}
-.mock-top{display:flex;justify-content:space-between;font-size:8px;font-weight:700}
-.mock-main{
-  margin-top:35px;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:25px;
-  font-weight:700;
-  letter-spacing:-1px;
-}
-.mock-line{height:5px;width:65%;background:#c9c1b7;margin-top:12px}
-.mock-line.short{width:35%}
-.mock-button{
-  margin-top:18px;
-  display:inline-block;
-  padding:7px 13px;
-  background:#24211e;
-  color:white;
-  font-size:8px;
-}
-.assistant .mock-window,.automation .mock-window,.concept .mock-window{
-  background:#11131c;color:#eee;
-}
-.assistant .mock-line,.automation .mock-line,.concept .mock-line{background:#41435a}
-.assistant .mock-button,.automation .mock-button,.concept .mock-button{background:#8b79ff}
-.project-info{padding:23px 25px}
-.project-meta{
-  display:flex;
-  justify-content:space-between;
-  color:var(--accent);
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  margin-bottom:12px;
-}
-.project-info h3{font-size:20px;margin-bottom:8px}
-.project-info p{color:var(--muted);font-size:12px}
-.project-arrow{font-size:20px;transition:.2s}
-.project-card:hover .project-arrow{transform:translate(4px,-4px)}
+.portfolio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.project-card{overflow:hidden;border-radius:19px;border:1px solid var(--border);background:var(--surface);transition:.3s}
+.project-card:hover{transform:translateY(-5px);border-color:#9b70ff70}
+.project-preview{height:235px;display:grid;place-items:center;position:relative;overflow:hidden}
+.preview-one{background:radial-gradient(circle at 50%,#553a31,#17100f 70%)}
+.preview-two{background:radial-gradient(circle at 50%,#343b70,#10101e 70%)}
+.preview-three{background:radial-gradient(circle at 50%,#315b52,#101a18 70%)}
+.preview-four{background:radial-gradient(circle at 50%,#514080,#171222 70%)}
+.preview-content{text-align:center}
+.preview-content strong{display:block;font-family:'Space Grotesk';font-size:32px;letter-spacing:-2px}
+.preview-content span{font-size:10px;letter-spacing:3px;color:#ffffffaa}
+.project-info{padding:22px}
+.project-info h3{font-family:'Space Grotesk';font-size:19px}
+.project-info p{color:var(--muted);font-size:13px;line-height:1.7;margin-top:9px}
+.project-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:17px}
+.project-tag{display:inline-block;padding:7px 10px;background:#8f64ff20;color:#bca4ff;border-radius:7px;font-size:10px;font-weight:700}
+.project-link{font-size:12px;color:#b69aff;font-weight:700}
+.project-link:hover{color:white}
+
+/* PROCESS */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.process-card{padding:24px 20px;background:var(--surface);border:1px solid var(--border);border-radius:17px}
+.process-number{color:#a98aff;font-family:'Space Grotesk';font-size:29px;font-weight:700;margin-bottom:23px}
+.process-card h3{font-size:16px;margin-bottom:10px}
+.process-card p{font-size:12px;line-height:1.8;color:var(--muted)}
 
 /* PRICING */
-.pricing-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-top:55px;
-  align-items:stretch;
-}
-.price-card{
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:32px;
-  background:#111;
-  display:flex;
-  flex-direction:column;
-}
-.price-card.featured{
-  border-color:#a78bfa;
-  background:linear-gradient(155deg,#211b35,#111);
-  transform:translateY(-10px);
-}
-.price-tag{
-  color:var(--accent);
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  font-weight:700;
-}
-.price-card h3{font-size:22px;margin:15px 0}
-.price{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:37px;
-  font-weight:700;
-  margin-bottom:10px;
-}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.price-card{padding:29px 24px;background:var(--surface);border:1px solid var(--border);border-radius:20px;position:relative;display:flex;flex-direction:column}
+.price-card.featured{border-color:#9d71ffb3;background:linear-gradient(160deg,#1b162b,#101019 75%);box-shadow:0 0 45px #754ddc1a}
+.popular{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gradient);border-radius:30px;padding:7px 14px;white-space:nowrap;font-size:10px;font-weight:800}
+.price-card h3{font-size:18px}
+.price-card .sub{color:var(--muted);font-size:12px;margin-top:8px}
+.price{font-family:'Space Grotesk';font-size:43px;font-weight:700;margin:24px 0 4px}
 .price small{font-size:12px;color:var(--muted);font-weight:400}
-.price-card>p{color:var(--muted);font-size:12px;line-height:1.7;min-height:43px}
-.price-features{
-  list-style:none;
-  margin:28px 0;
-  display:grid;
-  gap:15px;
-  flex:1;
-}
-.price-features li{font-size:12px;color:#ccc}
-.price-features li:before{content:"✓";color:var(--accent);margin-right:10px}
+.price-features{list-style:none;display:grid;gap:14px;margin:24px 0 28px;flex:1}
+.price-features li{font-size:12px;color:#d0cede;display:flex;gap:10px;line-height:1.5}
+.price-features li:before{content:"✓";color:#ad8aff;font-weight:800}
 .price-card .btn{width:100%}
+.pricing-note{margin-top:25px;color:var(--muted);font-size:11px;line-height:1.8;text-align:center}
 
 /* FAQ */
-.faq-list{max-width:800px;margin:50px auto 0}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-question{
-  width:100%;
-  padding:23px 0;
-  background:none;
-  border:0;
-  color:white;
-  text-align:left;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  font-weight:600;
-  cursor:pointer;
-}
-.faq-question span:last-child{color:var(--accent);font-size:20px}
-.faq-answer{
-  max-height:0;
-  overflow:hidden;
-  transition:max-height .3s ease;
-}
-.faq-answer p{
-  padding:0 30px 22px 0;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
-}
-.faq-item.open .faq-answer{max-height:180px}
+.faq-list{max-width:790px;display:grid;gap:12px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-question{width:100%;background:none;border:0;color:white;padding:21px;display:flex;justify-content:space-between;align-items:center;text-align:left;font-size:14px;font-weight:700}
+.faq-question span:last-child{color:#b99aff;font-size:21px;transition:.25s}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-answer p{padding:0 21px 21px;color:var(--muted);font-size:13px;line-height:1.8}
+.faq-item.active .faq-answer{max-height:200px}
+.faq-item.active .faq-question span:last-child{transform:rotate(45deg)}
 
 /* CONTACT */
-.contact-box{
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:65px;
-  background:
-    radial-gradient(circle at 90% 10%,#7757ff20,transparent 35%),
-    #111;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:55px;
-}
-.contact-copy h2{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(35px,5vw,55px);
-  line-height:1.08;
-  letter-spacing:-2px;
-}
-.contact-copy p{color:var(--muted);line-height:1.8;margin-top:20px;font-size:14px}
-.contact-form{display:grid;gap:13px}
-.contact-form input,.contact-form textarea,.contact-form select{
-  width:100%;
-  padding:15px;
-  background:#080808;
-  border:1px solid var(--border);
-  border-radius:8px;
-  color:white;
-  outline:none;
-  font-size:13px;
-}
-.contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{border-color:var(--accent)}
-.contact-form textarea{min-height:120px;resize:vertical}
-.contact-form select option{background:#111}
-.contact-form button{width:100%}
+.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:55px}
+.contact-copy p{color:var(--muted);line-height:1.9;font-size:14px;margin-top:18px}
+.contact-detail{margin-top:25px;padding:17px;border:1px solid var(--border);background:var(--surface);border-radius:13px}
+.contact-detail small{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}
+.contact-detail strong{font-size:13px}
+.contact-form{padding:29px;border:1px solid var(--border);background:var(--surface);border-radius:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{margin-bottom:17px}
+.field label{display:block;font-size:11px;font-weight:700;margin-bottom:9px;color:#d8d5e4}
+.field input,.field textarea,.field select{width:100%;background:#0a0a11;border:1px solid var(--border);border-radius:9px;padding:13px;color:white;outline:none;font-size:12px;transition:.2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--purple)}
+.field textarea{min-height:115px;resize:vertical}
+.field select option{background:#101019}
+.contact-form .btn{width:100%;border:0}
+.form-note{color:var(--muted);font-size:10px;text-align:center;margin-top:13px;line-height:1.6}
 
 /* FOOTER */
-footer{
-  border-top:1px solid var(--border);
-  padding:35px 0;
-}
-.footer-content{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-.footer-copy{font-size:12px;color:var(--muted)}
+footer{padding:35px 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footer-copy{color:var(--muted);font-size:11px}
 .footer-links{display:flex;gap:22px}
-.footer-links a{font-size:12px;color:var(--muted)}
+.footer-links a{color:var(--muted);font-size:11px}
 .footer-links a:hover{color:white}
 
 /* ANIMATIONS */
-.reveal{
-  opacity:0;
-  transform:translateY(25px);
-  transition:opacity .7s ease,transform .7s ease;
-}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 @media(max-width:850px){
-  .nav-links{
-    display:none;
-    position:absolute;
-    top:78px;left:0;width:100%;
-    background:#0b0b0b;
-    padding:25px 5%;
-    border-bottom:1px solid var(--border);
-    flex-direction:column;
-    align-items:flex-start;
-    gap:23px;
-  }
-  .nav-links.open{display:flex}
-  .menu-toggle{display:block}
-  .nav-cta{display:none}
-  .services-grid{grid-template-columns:repeat(2,1fr)}
-  .about-grid{gap:35px}
-  .process-grid{grid-template-columns:repeat(2,1fr)}
-  .pricing-grid{grid-template-columns:1fr}
-  .price-card.featured{transform:none}
-  .contact-box{padding:35px;grid-template-columns:1fr}
-}
-@media(max-width:600px){
-  .section{padding:80px 0}
-  .hero{min-height:700px}
-  .hero h1{letter-spacing:-3px}
-  .hero-bottom{gap:25px;margin-top:60px}
-  .services-grid,.portfolio-grid{grid-template-columns:1fr}
-  .about-grid{grid-template-columns:1fr}
-  .about-visual{min-height:300px}
-  .about-logo{font-size:75px}
-  .portfolio-header{align-items:flex-start;flex-direction:column}
+  .services-grid,.pricing-grid{grid-template-columns:1fr 1fr}
   .process-grid{grid-template-columns:1fr 1fr}
-  .contact-box{padding:25px}
-  .project-image{height:220px}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:35px}
+  .nav-links{gap:16px}
+}
+@media(max-width:650px){
+  nav{height:68px}
+  .menu-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:68px;left:0;width:100%;background:#0d0d15;padding:22px 5%;border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;gap:20px}
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:14px}
+  .nav-cta{text-align:center}
+  .hero{min-height:auto;padding:140px 0 70px}
+  h1{letter-spacing:-2.5px}
+  .hero-bottom{gap:25px;margin-top:45px}
+  section{padding:75px 0}
+  .services-grid,.pricing-grid,.portfolio-grid,.process-grid{grid-template-columns:1fr}
+  .about-visual{min-height:270px}
+  .about-symbol{font-size:80px}
+  .project-preview{height:195px}
+  .form-row{grid-template-columns:1fr;gap:0}
+  .contact-form{padding:20px}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
 }
 </style>
 </head>
 
 <body>
 
-<header class="navbar">
-  <div class="container nav-content">
-    <a href="#home" class="logo">NOVA<span>.</span>AI</a>
-
-    <nav class="nav-links" id="navLinks">
-      <a href="#home">Accueil</a>
-      <a href="#services">Services</a>
-      <a href="#about">Agence</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#pricing">Tarifs</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <a href="#contact" class="btn nav-cta">Démarrer un projet ↗</a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
-  </div>
+<header>
+<div class="container">
+<nav>
+<a href="#home" class="logo">NOVA<span>.</span>AI</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+<ul class="nav-links" id="navLinks">
+<li><a href="#services">Services</a></li>
+<li><a href="#about">Agence</a></li>
+<li><a href="#portfolio">Portfolio</a></li>
+<li><a href="#pricing">Tarifs</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#contact" class="nav-cta">Parler de mon projet ↗</a></li>
+</ul>
+</nav>
+</div>
 </header>
 
 <main>
 
 <section class="hero" id="home">
-  <div class="container hero-content">
-    <div class="hero-tag"><span class="status-dot"></span> DIGITAL STUDIO · CRÉATION & INNOVATION</div>
-
-    <h1>On transforme<br>vos idées en<br><span class="gradient-text">expériences.</span></h1>
-
-    <p>
-      NOVA AI accompagne les marques et les entrepreneurs dans leur
-      développement digital. Sites web modernes, interfaces élégantes
-      et solutions intelligentes.
-    </p>
-
-    <div class="hero-actions">
-      <a href="#portfolio" class="btn">Découvrir nos projets ↗</a>
-      <a href="#services" class="btn btn-outline">Nos services</a>
-    </div>
-
-    <div class="hero-bottom">
-      <div class="hero-stat"><strong>01</strong><span>Vision créative</span></div>
-      <div class="hero-stat"><strong>02</strong><span>Design premium</span></div>
-      <div class="hero-stat"><strong>03</strong><span>Solutions digitales</span></div>
-    </div>
-  </div>
+<div class="container">
+<div class="hero-content">
+<div class="eyebrow"><span class="status-dot"></span>DIGITAL AGENCY · DESIGN & TECHNOLOGY</div>
+<h1>Donnez une nouvelle dimension à votre <span class="gradient-text">présence digitale.</span></h1>
+<p class="hero-description">NOVA AI accompagne les petites entreprises dans leur développement numérique grâce à des sites web modernes, un design soigné et des solutions digitales adaptées à leurs besoins.</p>
+<div class="hero-actions">
+<a href="#contact" class="btn">Démarrer un projet ↗</a>
+<a href="#portfolio" class="btn btn-outline">Découvrir nos projets</a>
+</div>
+<div class="hero-bottom">
+<div class="hero-stat"><strong>100%</strong><span>Design personnalisé</span></div>
+<div class="hero-stat"><strong>Responsive</strong><span>Mobile et ordinateur</span></div>
+<div class="hero-stat"><strong>Sur mesure</strong><span>Selon vos besoins</span></div>
+</div>
+</div>
+</div>
 </section>
 
-<div class="marquee">
-  <div class="marquee-track">
-    <span>WEB DESIGN ✳</span><span>DIGITAL EXPERIENCE ✳</span>
-    <span>AI AUTOMATION ✳</span><span>CREATIVE DEVELOPMENT ✳</span>
-    <span>WEB DESIGN ✳</span><span>DIGITAL EXPERIENCE ✳</span>
-    <span>AI AUTOMATION ✳</span><span>CREATIVE DEVELOPMENT ✳</span>
-  </div>
+<section id="services">
+<div class="container">
+<div class="section-heading reveal">
+<div class="section-label">Nos expertises</div>
+<h2 class="section-title">Des solutions pensées pour <span class="gradient-text">évoluer.</span></h2>
+<p class="section-description">Nous concevons des expériences digitales accessibles, modernes et adaptées aux objectifs de votre activité.</p>
+</div>
+<div class="services-grid">
+<article class="service-card reveal">
+<div class="service-icon">◈</div>
+<h3>Création de sites web</h3>
+<p>Sites vitrines modernes et responsive pour présenter votre activité, vos services et faciliter les prises de contact.</p>
+<a href="#pricing">Découvrir les offres ↗</a>
+</article>
+<article class="service-card reveal">
+<div class="service-icon">✳</div>
+<h3>Design digital</h3>
+<p>Interfaces soignées, identité visuelle digitale et expériences utilisateur pensées pour valoriser votre marque.</p>
+<a href="#portfolio">Voir les projets ↗</a>
+</article>
+<article class="service-card reveal">
+<div class="service-icon">⌘</div>
+<h3>Automatisation & IA</h3>
+<p>Étude de solutions simples pour optimiser certaines tâches et explorer les possibilités de l'intelligence artificielle.</p>
+<a href="#contact">Parler de vos besoins ↗</a>
+</article>
+</div>
+</div>
+</section>
+
+<section class="about-section" id="about">
+<div class="container">
+<div class="about-grid">
+<div class="about-visual reveal">
+<div class="about-symbol">N<span class="gradient-text">.</span></div>
+<div class="about-badge">DESIGN · INNOVATION · DIGITAL</div>
+</div>
+<div class="about-copy reveal">
+<div class="section-label">À propos de NOVA AI</div>
+<h2 class="section-title">Le digital doit être un <span class="gradient-text">avantage.</span></h2>
+<p>NOVA AI est un projet d'agence digitale qui aide les petites entreprises à développer leur présence en ligne.</p>
+<p>Notre approche repose sur trois principes : un design professionnel, une expérience simple à utiliser et des solutions adaptées à chaque projet.</p>
+<div class="about-points">
+<div class="about-point"><span class="check">✓</span> Une approche adaptée à votre activité</div>
+<div class="about-point"><span class="check">✓</span> Un design moderne et responsive</div>
+<div class="about-point"><span class="check">✓</span> Un accompagnement clair à chaque étape</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="portfolio">
+<div class="container">
+<div class="section-heading reveal">
+<div class="section-label">Portfolio</div>
+<h2 class="section-title">Des idées transformées en <span class="gradient-text">projets.</span></h2>
+<p class="section-description">Découvrez quelques concepts et projets développés dans l'univers NOVA AI.</p>
 </div>
 
-<section class="section" id="services">
-  <div class="container">
-    <div class="section-label reveal">01 — Nos expertises</div>
-    <h2 class="section-title reveal">Des solutions pensées<br><span class="gradient-text">pour évoluer.</span></h2>
-    <p class="section-description reveal">
-      Nous concevons des expériences digitales qui associent esthétique,
-      performance et simplicité d'utilisation.
-    </p>
+<div class="portfolio-grid">
 
-    <div class="services-grid">
-      <article class="service-card reveal">
-        <div class="service-icon">⌘</div>
-        <h3>Création de sites web</h3>
-        <p>Des sites modernes, rapides et responsive pour présenter votre activité et développer votre présence en ligne.</p>
-      </article>
+<article class="project-card reveal">
+<a href="../Maison%20Noire/index.html">
+<div class="project-preview preview-one">
+<div class="preview-content"><strong>MAISON NOIRE</strong><span>INTERIOR DESIGN CONCEPT</span></div>
+</div>
+</a>
+<div class="project-info">
+<h3>Maison Noire</h3>
+<p>Concept de site vitrine avec une direction artistique sombre et élégante.</p>
+<div class="project-bottom"><span class="project-tag">WEB DESIGN</span><a class="project-link" href="../Maison%20Noire/index.html">Visiter le projet ↗</a></div>
+</div>
+</article>
 
-      <article class="service-card reveal">
-        <div class="service-icon">✳</div>
-        <h3>UI / UX Design</h3>
-        <p>Des interfaces soignées, une navigation fluide et une expérience utilisateur conçue avec attention.</p>
-      </article>
+<article class="project-card reveal">
+<a href="../NOVA%20Assistant/index.html">
+<div class="project-preview preview-two">
+<div class="preview-content"><strong>NOVA ASSISTANT</strong><span>AI EXPERIENCE</span></div>
+</div>
+</a>
+<div class="project-info">
+<h3>NOVA Assistant</h3>
+<p>Concept d'interface autour d'un assistant numérique intelligent.</p>
+<div class="project-bottom"><span class="project-tag">AI INTERFACE</span><a class="project-link" href="../NOVA%20Assistant/index.html">Visiter le projet ↗</a></div>
+</div>
+</article>
 
-      <article class="service-card reveal">
-        <div class="service-icon">⌁</div>
-        <h3>Automatisation</h3>
-        <p>Des workflows intelligents pour simplifier les tâches répétitives et optimiser les processus.</p>
-      </article>
+<article class="project-card reveal">
+<a href="../Nova%20Automation/index.html">
+<div class="project-preview preview-three">
+<div class="preview-content"><strong>NOVA AUTOMATION</strong><span>WORKFLOW CONCEPT</span></div>
+</div>
+</a>
+<div class="project-info">
+<h3>Nova Automation</h3>
+<p>Exploration d'une interface dédiée à la présentation de solutions d'automatisation.</p>
+<div class="project-bottom"><span class="project-tag">AUTOMATION</span><a class="project-link" href="../Nova%20Automation/index.html">Visiter le projet ↗</a></div>
+</div>
+</article>
 
-      <article class="service-card reveal">
-        <div class="service-icon">◈</div>
-        <h3>Solutions IA</h3>
-        <p>Des assistants et outils numériques pour rendre les interactions plus efficaces.</p>
-      </article>
+<article class="project-card reveal">
+<a href="#contact">
+<div class="project-preview preview-four">
+<div class="preview-content"><strong>YOUR BRAND</strong><span>YOUR NEXT PROJECT</span></div>
+</div>
+</a>
+<div class="project-info">
+<h3>Votre projet ici</h3>
+<p>Créons ensemble une expérience digitale adaptée à votre entreprise.</p>
+<div class="project-bottom"><span class="project-tag">PROJET SUR MESURE</span><a class="project-link" href="#contact">Nous contacter ↗</a></div>
+</div>
+</article>
 
-      <article class="service-card reveal">
-        <div class="service-icon">↗</div>
-        <h3>Identité digitale</h3>
-        <p>Une présence cohérente et professionnelle pour mettre en valeur votre marque.</p>
-      </article>
-
-      <article class="service-card reveal">
-        <div class="service-icon">▧</div>
-        <h3>Optimisation</h3>
-        <p>Amélioration de l'expérience, de la structure et des performances de votre site web.</p>
-      </article>
-    </div>
-  </div>
+</div>
+</div>
 </section>
 
-<section class="section" id="about">
-  <div class="container about-grid">
-    <div class="about-visual reveal">
-      <div class="about-orbit"></div>
-      <div class="about-logo">N<span>.</span></div>
-    </div>
-
-    <div class="about-text">
-      <div class="section-label reveal">02 — L'agence</div>
-      <h2 class="section-title reveal">Le digital,<br><span class="gradient-text">autrement.</span></h2>
-      <p class="reveal">
-        NOVA AI est un studio digital imaginé autour d'une idée simple :
-        rendre les outils numériques plus accessibles, plus beaux et plus efficaces.
-      </p>
-      <p class="reveal">
-        Chaque projet est pensé pour répondre à un objectif précis, avec
-        une attention particulière portée au design et à l'expérience.
-      </p>
-
-      <div class="about-points reveal">
-        <div class="about-point"><span class="check">✓</span> Design moderne et cohérent</div>
-        <div class="about-point"><span class="check">✓</span> Approche centrée utilisateur</div>
-        <div class="about-point"><span class="check">✓</span> Solutions adaptées au projet</div>
-      </div>
-    </div>
-  </div>
+<section class="process-section" id="process">
+<div class="container">
+<div class="section-heading reveal">
+<div class="section-label">Notre méthode</div>
+<h2 class="section-title">Simple. Clair. <span class="gradient-text">Efficace.</span></h2>
+<p class="section-description">Chaque projet suit une méthode structurée pour avancer avec une vision claire du résultat attendu.</p>
+</div>
+<div class="process-grid">
+<article class="process-card reveal"><div class="process-number">01</div><h3>Échange</h3><p>Nous découvrons votre activité, vos objectifs et vos besoins.</p></article>
+<article class="process-card reveal"><div class="process-number">02</div><h3>Conception</h3><p>Nous définissons la structure, le style et les fonctionnalités.</p></article>
+<article class="process-card reveal"><div class="process-number">03</div><h3>Création</h3><p>Nous développons votre projet et préparons une première version.</p></article>
+<article class="process-card reveal"><div class="process-number">04</div><h3>Livraison</h3><p>Après validation et corrections prévues, votre projet est livré.</p></article>
+</div>
+</div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="section-label reveal">03 — Notre méthode</div>
-    <h2 class="section-title reveal">Du concept au <span class="gradient-text">résultat.</span></h2>
+<section id="pricing">
+<div class="container">
+<div class="section-heading reveal">
+<div class="section-label">Nos offres</div>
+<h2 class="section-title">Un tarif adapté à votre <span class="gradient-text">ambition.</span></h2>
+<p class="section-description">Des formules de départ conçues pour aider les petites entreprises à développer leur présence digitale.</p>
+</div>
 
-    <div class="process-grid">
-      <article class="process-card reveal">
-        <div class="process-number">01</div>
-        <h3>Découverte</h3>
-        <p>Nous échangeons sur votre idée, vos besoins et vos objectifs.</p>
-      </article>
+<div class="pricing-grid">
+<article class="price-card reveal">
+<h3>NOVA STARTER</h3><p class="sub">L'essentiel pour démarrer.</p>
+<div class="price">89 € <small>/ projet</small></div>
+<ul class="price-features">
+<li>Site vitrine one-page</li><li>Jusqu'à 4 sections</li><li>Design personnalisé</li><li>Version mobile et ordinateur</li><li>Boutons de contact</li><li>1 série de corrections</li>
+</ul>
+<a href="#contact" class="btn btn-outline">Choisir Starter ↗</a>
+</article>
 
-      <article class="process-card reveal">
-        <div class="process-number">02</div>
-        <h3>Conception</h3>
-        <p>Nous définissons la direction artistique et la structure du projet.</p>
-      </article>
+<article class="price-card featured reveal">
+<div class="popular">LE PLUS POPULAIRE</div>
+<h3>NOVA BUSINESS</h3><p class="sub">Pour une présence plus complète.</p>
+<div class="price">149 € <small>/ projet</small></div>
+<ul class="price-features">
+<li>Jusqu'à 3 pages</li><li>Design premium personnalisé</li><li>Animations simples</li><li>Présentation des services</li><li>Formulaire ou liens de contact</li><li>Optimisation mobile</li><li>2 séries de corrections</li>
+</ul>
+<a href="#contact" class="btn">Choisir Business ↗</a>
+</article>
 
-      <article class="process-card reveal">
-        <div class="process-number">03</div>
-        <h3>Développement</h3>
-        <p>Nous construisons une expérience digitale fonctionnelle et soignée.</p>
-      </article>
+<article class="price-card reveal">
+<h3>NOVA PREMIUM</h3><p class="sub">Une expérience plus complète.</p>
+<div class="price">199 € <small>/ projet</small></div>
+<ul class="price-features">
+<li>Jusqu'à 5 pages</li><li>Design entièrement personnalisé</li><li>Animations avancées</li><li>Galerie ou portfolio</li><li>Interactions personnalisées</li><li>Optimisation mobile</li><li>2 séries de corrections</li>
+</ul>
+<a href="#contact" class="btn btn-outline">Choisir Premium ↗</a>
+</article>
+</div>
 
-      <article class="process-card reveal">
-        <div class="process-number">04</div>
-        <h3>Lancement</h3>
-        <p>Nous finalisons le projet et préparons sa mise en ligne.</p>
-      </article>
-    </div>
-  </div>
+<p class="pricing-note">Tarifs indicatifs de lancement pour des projets simples. Hébergement, nom de domaine, fonctionnalités avancées et demandes supplémentaires non inclus. Chaque projet doit être validé avant devis.</p>
+</div>
 </section>
 
-<section class="section" id="portfolio">
-  <div class="container">
-    <div class="portfolio-header">
-      <div>
-        <div class="section-label reveal">04 — Portfolio</div>
-        <h2 class="section-title reveal">Des projets.<br><span class="gradient-text">Une vision.</span></h2>
-      </div>
-      <p class="section-description reveal">
-        Découvrez quelques concepts et réalisations du studio.
-        Cliquez sur un projet pour l'explorer.
-      </p>
-    </div>
-
-    <div class="portfolio-grid">
-
-      <!-- PROJET 1 : MAISON NOIRE -->
-      <a class="project-card reveal" href="../Maison%20Noire/index.html" target="_blank" rel="noopener">
-        <div class="project-image maison">
-          <div class="mock-window">
-            <div class="mock-top"><span>MAISON NOIRE</span><span>MENU</span></div>
-            <div class="mock-main">L'art de<br>l'exception.</div>
-            <div class="mock-line"></div>
-            <div class="mock-line short"></div>
-            <span class="mock-button">DÉCOUVRIR</span>
-          </div>
-        </div>
-        <div class="project-info">
-          <div class="project-meta"><span>Website design</span><span class="project-arrow">↗</span></div>
-          <h3>Maison Noire</h3>
-          <p>Expérience digitale · Design premium</p>
-        </div>
-      </a>
-
-      <!-- PROJET 2 : NOVA ASSISTANT -->
-      <a class="project-card reveal" href="../nova-assistant/index.html" target="_blank" rel="noopener">
-        <div class="project-image assistant">
-          <div class="mock-window">
-            <div class="mock-top"><span>NOVA ASSISTANT</span><span>AI SYSTEM</span></div>
-            <div class="mock-main">Think<br>smarter.</div>
-            <div class="mock-line"></div>
-            <div class="mock-line short"></div>
-            <span class="mock-button">LANCER L'ASSISTANT</span>
-          </div>
-        </div>
-        <div class="project-info">
-          <div class="project-meta"><span>Artificial intelligence</span><span class="project-arrow">↗</span></div>
-          <h3>NOVA Assistant</h3>
-          <p>Interface IA · Assistant digital</p>
-        </div>
-      </a>
-
-      <!-- PROJET 3 : NOVA AUTOMATION -->
-      <a class="project-card reveal" href="../Nova-automation/index.html" target="_blank" rel="noopener">
-        <div class="project-image automation">
-          <div class="mock-window">
-            <div class="mock-top"><span>NOVA AUTOMATION</span><span>WORKFLOW</span></div>
-            <div class="mock-main">Work less.<br>Do more.</div>
-            <div class="mock-line"></div>
-            <div class="mock-line short"></div>
-            <span class="mock-button">EXPLORER</span>
-          </div>
-        </div>
-        <div class="project-info">
-          <div class="project-meta"><span>Automation</span><span class="project-arrow">↗</span></div>
-          <h3>NOVA Automation</h3>
-          <p>Workflow intelligent · Productivité</p>
-        </div>
-      </a>
-
-      <!-- PROJET 4 : CONCEPT -->
-      <a class="project-card reveal" href="#contact">
-        <div class="project-image concept">
-          <div class="mock-window">
-            <div class="mock-top"><span>DIGITAL CONCEPT</span><span>STUDIO</span></div>
-            <div class="mock-main">Build your<br>next idea.</div>
-            <div class="mock-line"></div>
-            <div class="mock-line short"></div>
-            <span class="mock-button">VOTRE PROJET</span>
-          </div>
-        </div>
-        <div class="project-info">
-          <div class="project-meta"><span>Creative concept</span><span class="project-arrow">↗</span></div>
-          <h3>Votre prochain projet</h3>
-          <p>Un concept digital imaginé pour votre activité</p>
-        </div>
-      </a>
-
-    </div>
-  </div>
+<section id="faq">
+<div class="container">
+<div class="section-heading reveal">
+<div class="section-label">FAQ</div>
+<h2 class="section-title">Des questions ? <span class="gradient-text">On vous répond.</span></h2>
+</div>
+<div class="faq-list reveal">
+<div class="faq-item"><button class="faq-question"><span>Combien coûte la création d'un site web ?</span><span>+</span></button><div class="faq-answer"><p>Nos formules indicatives commencent à 89 €. Le tarif final dépend du contenu, du nombre de pages et des fonctionnalités demandées.</p></div></div>
+<div class="faq-item"><button class="faq-question"><span>Le site sera-t-il adapté aux téléphones ?</span><span>+</span></button><div class="faq-answer"><p>Oui. Les offres présentées prévoient une adaptation aux écrans mobiles et aux ordinateurs.</p></div></div>
+<div class="faq-item"><button class="faq-question"><span>Le nom de domaine et l'hébergement sont-ils inclus ?</span><span>+</span></button><div class="faq-answer"><p>Non. Ces éléments sont séparés du prix de création. Leur coût dépend du fournisseur et des besoins du projet.</p></div></div>
+<div class="faq-item"><button class="faq-question"><span>Puis-je demander des modifications ?</span><span>+</span></button><div class="faq-answer"><p>Chaque formule comprend un nombre défini de séries de corrections. Les demandes supplémentaires peuvent faire l'objet d'un devis.</p></div></div>
+<div class="faq-item"><button class="faq-question"><span>Comment démarrer un projet ?</span><span>+</span></button><div class="faq-answer"><p>Envoyez une demande via le formulaire. Nous pourrons ensuite discuter de votre besoin, vérifier sa faisabilité et définir un périmètre précis.</p></div></div>
+</div>
+</div>
 </section>
 
-<section class="section" id="pricing">
-  <div class="container">
-    <div class="section-label reveal">05 — Tarification</div>
-    <h2 class="section-title reveal">Un format adapté<br><span class="gradient-text">à vos ambitions.</span></h2>
-    <p class="section-description reveal">
-      Des offres indicatives à adapter selon la complexité et les besoins de chaque projet.
-    </p>
+<section class="contact-section" id="contact">
+<div class="container">
+<div class="contact-grid">
+<div class="contact-copy reveal">
+<div class="section-label">Contact</div>
+<h2 class="section-title">Votre prochain projet commence <span class="gradient-text">ici.</span></h2>
+<p>Vous avez une idée, une entreprise à développer ou un projet digital ? Présentez-nous votre besoin et échangeons sur les possibilités.</p>
+<div class="contact-detail"><small>AGENCE</small><strong>NOVA AI — Digital Agency</strong></div>
+<div class="contact-detail"><small>EMAIL</small><strong>skiitosaka@gmail.com</strong></div>
+</div>
 
-    <div class="pricing-grid">
-      <article class="price-card reveal">
-        <div class="price-tag">Essentiel</div>
-        <h3>Starter</h3>
-        <div class="price">Sur devis</div>
-        <p>Pour lancer une première présence digitale.</p>
-        <ul class="price-features">
-          <li>Site vitrine simple</li>
-          <li>Design responsive</li>
-          <li>Présentation de l'activité</li>
-          <li>Formulaire de contact</li>
-        </ul>
-        <a href="#contact" class="btn btn-outline">Choisir cette offre</a>
-      </article>
-
-      <article class="price-card featured reveal">
-        <div class="price-tag">Le plus complet</div>
-        <h3>Business</h3>
-        <div class="price">Sur devis</div>
-        <p>Pour une présence professionnelle plus avancée.</p>
-        <ul class="price-features">
-          <li>Site multi-sections</li>
-          <li>Design personnalisé</li>
-          <li>Animations et interactions</li>
-          <li>Optimisation responsive</li>
-          <li>Accompagnement projet</li>
-        </ul>
-        <a href="#contact" class="btn">Choisir cette offre ↗</a>
-      </article>
-
-      <article class="price-card reveal">
-        <div class="price-tag">Personnalisé</div>
-        <h3>Premium</h3>
-        <div class="price">Sur devis</div>
-        <p>Pour les projets avec des besoins spécifiques.</p>
-        <ul class="price-features">
-          <li>Conception sur mesure</li>
-          <li>Fonctionnalités avancées</li>
-          <li>Intégrations personnalisées</li>
-          <li>Automatisations possibles</li>
-          <li>Suivi adapté au projet</li>
-        </ul>
-        <a href="#contact" class="btn btn-outline">Parler du projet</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="faq">
-  <div class="container">
-    <div class="section-label reveal">06 — FAQ</div>
-    <h2 class="section-title reveal" style="text-align:center">Des questions ?<br><span class="gradient-text">On vous répond.</span></h2>
-
-    <div class="faq-list">
-      <div class="faq-item reveal">
-        <button class="faq-question"><span>Quels types de projets réalisez-vous ?</span><span>+</span></button>
-        <div class="faq-answer"><p>Nous travaillons sur des sites vitrines, des interfaces digitales, des concepts web et des projets d'automatisation.</p></div>
-      </div>
-
-      <div class="faq-item reveal">
-        <button class="faq-question"><span>Combien coûte un site web ?</span><span>+</span></button>
-        <div class="faq-answer"><p>Le prix dépend du nombre de pages, des fonctionnalités et du niveau de personnalisation. Un devis est établi après discussion.</p></div>
-      </div>
-
-      <div class="faq-item reveal">
-        <button class="faq-question"><span>Le site sera-t-il adapté au mobile ?</span><span>+</span></button>
-        <div class="faq-answer"><p>Oui. Les projets sont conçus pour s'adapter aux écrans d'ordinateur, de tablette et de téléphone.</p></div>
-      </div>
-
-      <div class="faq-item reveal">
-        <button class="faq-question"><span>Comment démarrer un projet ?</span><span>+</span></button>
-        <div class="faq-answer"><p>Il suffit de nous présenter votre idée via le formulaire de contact. Nous pourrons ensuite préciser les besoins du projet.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="contact">
-  <div class="container">
-    <div class="contact-box reveal">
-      <div class="contact-copy">
-        <div class="section-label">07 — Contact</div>
-        <h2>Votre prochaine<br><span class="gradient-text">idée commence ici.</span></h2>
-        <p>
-          Vous avez un projet en tête ? Présentez-nous votre idée
-          et les besoins associés. Construisons quelque chose de pertinent.
-        </p>
-      </div>
-
-      <form class="contact-form" id="contactForm">
-        <input type="text" id="name" placeholder="Votre nom" required>
-        <input type="email" id="email" placeholder="Votre adresse e-mail" required>
-
-        <select id="projectType" required>
-          <option value="">Type de projet</option>
-          <option>Création de site web</option>
-          <option>Design UI / UX</option>
-          <option>Automatisation</option>
-          <option>Solution IA</option>
-          <option>Autre projet</option>
-        </select>
-
-        <textarea id="message" placeholder="Parlez-nous de votre projet..." required></textarea>
-        <button class="btn" type="submit">Préparer mon message ↗</button>
-        <p id="formMessage" style="font-size:11px;color:#aaa;line-height:1.6"></p>
-      </form>
-    </div>
-  </div>
+<form class="contact-form reveal" id="contactForm">
+<div class="form-row">
+<div class="field"><label for="name">Votre nom</label><input id="name" name="name" type="text" placeholder="Jean Dupont" required></div>
+<div class="field"><label for="email">Votre email</label><input id="email" name="email" type="email" placeholder="vous@exemple.fr" required></div>
+</div>
+<div class="field"><label for="company">Entreprise (facultatif)</label><input id="company" name="company" type="text" placeholder="Nom de votre entreprise"></div>
+<div class="field">
+<label for="offer">Votre besoin</label>
+<select id="offer" name="offer" required>
+<option value="">Choisir une formule</option>
+<option>NOVA STARTER — 89 €</option>
+<option>NOVA BUSINESS — 149 €</option>
+<option>NOVA PREMIUM — 199 €</option>
+<option>Autre projet / Demande personnalisée</option>
+</select>
+</div>
+<div class="field"><label for="message">Décrivez votre projet</label><textarea id="message" name="message" placeholder="Parlez-nous de votre activité et de vos besoins..." required></textarea></div>
+<button type="submit" class="btn">Préparer ma demande ↗</button>
+<p class="form-note">Votre application de messagerie s'ouvrira avec le message préparé. Vous pourrez le vérifier avant de l'envoyer.</p>
+</form>
+</div>
+</div>
 </section>
 
 </main>
 
 <footer>
-  <div class="container footer-content">
-    <a href="#home" class="logo">NOVA<span>.</span>AI</a>
-    <p class="footer-copy">© <span id="year"></span> NOVA AI — Digital Studio.</p>
-    <div class="footer-links">
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
+<div class="container">
+<div class="footer-inner">
+<a href="#home" class="logo">NOVA<span>.</span>AI</a>
+<p class="footer-copy">© <span id="year"></span> NOVA AI. Tous droits réservés.</p>
+<div class="footer-links">
+<a href="#services">Services</a><a href="#pricing">Tarifs</a><a href="#contact">Contact</a>
+</div>
+</div>
+</div>
 </footer>
 
 <script>
-// MENU MOBILE
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 
@@ -1003,7 +498,15 @@ document.querySelectorAll(".nav-links a").forEach(link => {
   });
 });
 
-// ANIMATIONS AU SCROLL
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const item = button.closest(".faq-item");
+    const wasOpen = item.classList.contains("active");
+    document.querySelectorAll(".faq-item").forEach(faq => faq.classList.remove("active"));
+    if (!wasOpen) item.classList.add("active");
+  });
+});
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1015,51 +518,37 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
 
-// FAQ ACCORDION
-document.querySelectorAll(".faq-question").forEach(button => {
-  button.addEventListener("click", () => {
-    const item = button.closest(".faq-item");
-    const wasOpen = item.classList.contains("open");
+document.getElementById("year").textContent = new Date().getFullYear();
 
-    document.querySelectorAll(".faq-item").forEach(faq => {
-      faq.classList.remove("open");
-      faq.querySelector(".faq-question span:last-child").textContent = "+";
-    });
+const CONTACT_EMAIL = "skiitosaka@gmail.com";
 
-    if (!wasOpen) {
-      item.classList.add("open");
-      button.querySelector("span:last-child").textContent = "−";
-    }
-  });
-});
-
-// FORMULAIRE DE CONTACT
 document.getElementById("contactForm").addEventListener("submit", event => {
   event.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const type = document.getElementById("projectType").value;
-  const message = document.getElementById("message").value.trim();
+  const form = new FormData(event.target);
+  const name = form.get("name");
+  const email = form.get("email");
+  const company = form.get("company") || "Non renseignée";
+  const offer = form.get("offer");
+  const message = form.get("message");
 
-  const destination = "contact@nova-ai.fr";
-
-  const subject = encodeURIComponent("Nouveau projet NOVA AI : " + type);
+  const subject = encodeURIComponent("Nouvelle demande de projet — NOVA AI");
   const body = encodeURIComponent(
-    "Nom : " + name +
-    "\nEmail : " + email +
-    "\nProjet : " + type +
-    "\n\nMessage :\n" + message
+`Bonjour NOVA AI,
+
+Nom : ${name}
+Email : ${email}
+Entreprise : ${company}
+Formule : ${offer}
+
+Projet :
+${message}
+
+Envoyé depuis le site NOVA AI.`
   );
 
-  document.getElementById("formMessage").textContent =
-    "Votre application e-mail va s'ouvrir pour préparer le message.";
-
-  window.location.href = "mailto:" + destination + "?subject=" + subject + "&body=" + body;
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
 });
-
-// ANNÉE AUTOMATIQUE
-document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 
 </body>
