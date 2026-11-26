@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11110f">
+<title>MAISON NOIRE — L'expérience gastronomique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#11110f;
+  --panel:#191916;
+  --cream:#eee8dc;
+  --muted:#aaa397;
+  --gold:#bd9b69;
+  --line:rgba(238,232,220,.13);
+  --serif:'Playfair Display',serif;
+  --sans:'DM Sans',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:hidden}
+body.locked{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{color:inherit}
+img{display:block;max-width:100%}
+::selection{background:var(--gold);color:#111}
+
+.progress{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:var(--gold);z-index:300;
+}
+
+.navbar{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  padding:23px 7%;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid transparent;
+  transition:.35s;
+}
+.navbar.scrolled{
+  padding:15px 7%;background:rgba(17,17,15,.94);
+  backdrop-filter:blur(18px);border-color:var(--line);
+}
+.logo{font-family:var(--serif);font-size:24px;letter-spacing:2px}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{
+  color:#c1bbaf;font-size:10px;text-transform:uppercase;
+  letter-spacing:1.8px;transition:.25s;position:relative;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:-8px;width:0;height:1px;
+  background:var(--gold);transition:.3s;
+}
+.nav-links a:hover{color:white}
+.nav-links a:hover::after{width:100%}
+.nav-action{
+  padding:13px 19px;border:1px solid var(--gold);
+  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
+  transition:.3s;
+}
+.nav-action:hover{background:var(--gold);color:#111}
+.menu-toggle{
+  display:none;background:none;border:0;font-size:25px;cursor:pointer;
+}
+
+.hero{
+  min-height:100svh;position:relative;display:flex;align-items:center;
+  padding:150px 11% 100px;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.16)),
+    linear-gradient(0deg,rgba(0,0,0,.48),transparent 45%),
+    url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2200&q=90') center/cover;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.17),transparent);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:2;max-width:750px}
+.eyebrow{
+  color:var(--gold);font-size:10px;letter-spacing:4px;
+  text-transform:uppercase;margin-bottom:25px;
+}
+.hero h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(65px,9vw,120px);line-height:.98;
+  letter-spacing:-3px;margin-bottom:30px;
+}
+.hero h1 em{color:var(--gold);font-weight:400}
+.hero-description{
+  max-width:440px;color:#d0c9bd;font-size:13px;
+  line-height:2;margin-bottom:38px;
+}
+.button{
+  display:inline-flex;align-items:center;justify-content:center;gap:18px;
+  background:var(--gold);color:#111;padding:17px 24px;
+  border:1px solid var(--gold);font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;font-weight:700;
+  cursor:pointer;transition:.3s;
+}
+.button:hover{background:transparent;color:var(--cream)}
+.button .arrow{font-size:17px;transition:.3s}
+.button:hover .arrow{transform:translateX(5px)}
+.hero-bottom{
+  position:absolute;bottom:35px;left:7%;right:7%;z-index:2;
+  display:flex;justify-content:space-between;
+  color:#c2b9ab;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+}
+.hero-content>*{animation:heroIn .9s both}
+.hero-content .eyebrow{animation-delay:.1s}
+.hero-content h1{animation-delay:.25s}
+.hero-content .hero-description{animation-delay:.4s}
+.hero-content .button{animation-delay:.55s}
+@keyframes heroIn{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.section{padding:125px 9%}
+.section-heading{text-align:center;margin:0 auto 65px}
+.section-heading h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(38px,5vw,64px);line-height:1.15;
+}
+.section-heading p{font-size:12px;color:var(--muted);margin-top:18px;line-height:1.8}
+
+.story{display:grid;grid-template-columns:1.05fr .95fr;gap:85px;align-items:center}
+.story-image{height:590px;position:relative}
+.story-image img{width:100%;height:100%;object-fit:cover}
+.story-image::after{
+  content:"";position:absolute;inset:15px;
+  border:1px solid rgba(255,255,255,.25);pointer-events:none;
+}
+.story-copy h2{
+  font-family:var(--serif);font-size:clamp(40px,5vw,62px);
+  font-weight:400;line-height:1.13;margin-bottom:25px;
+}
+.story-copy p{color:var(--muted);font-size:13px;line-height:2.1;margin-bottom:18px}
+.signature{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:25px;margin-top:30px}
+
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  margin-top:100px;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.stat{text-align:center;padding:35px 15px}
+.stat strong{font-family:var(--serif);font-size:35px;font-weight:400;color:var(--gold)}
+.stat span{display:block;color:var(--muted);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:10px}
+
+.menu-section{background:var(--panel)}
+.menu-tabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:55px}
+.menu-tab{
+  background:transparent;border:1px solid var(--line);
+  color:var(--muted);padding:13px 25px;
+  font-size:10px;letter-spacing:1.7px;text-transform:uppercase;
+  cursor:pointer;transition:.25s;
+}
+.menu-tab:hover,.menu-tab.active{background:var(--gold);border-color:var(--gold);color:#111}
+.menu-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:36px 65px}
+.dish{
+  display:flex;justify-content:space-between;gap:20px;
+  border-bottom:1px solid var(--line);padding:0 0 24px;
+  animation:dishIn .35s both;
+}
+@keyframes dishIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.dish h3{font-family:var(--serif);font-size:21px;font-weight:400;margin-bottom:9px}
+.dish p{font-size:11px;line-height:1.8;color:var(--muted)}
+.dish-price{font-family:var(--serif);font-size:18px;color:var(--gold);white-space:nowrap}
+.menu-note{text-align:center;color:var(--muted);font-size:10px;margin-top:45px}
+
+.gallery-grid{
+  display:grid;grid-template-columns:1.3fr 1fr 1fr;
+  gap:15px;
+}
+.gallery-item{height:350px;overflow:hidden;position:relative;cursor:zoom-in}
+.gallery-item img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(.75);transition:transform .7s,filter .5s;
+}
+.gallery-item:hover img{transform:scale(1.07);filter:brightness(1)}
+.gallery-item::after{
+  content:"AGRANDIR ↗";position:absolute;bottom:20px;left:20px;
+  font-size:9px;letter-spacing:2px;opacity:0;transition:.3s;
+}
+.gallery-item:hover::after{opacity:1}
+
+.lightbox{
+  position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.94);
+  display:none;align-items:center;justify-content:center;padding:35px;
+}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain}
+.lightbox-close{
+  position:absolute;top:25px;right:35px;background:none;
+  border:0;font-size:35px;cursor:pointer;color:white;
+}
+
+.reservation{
+  background:
+  linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.88)),
+  url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1800&q=85') center/cover;
+}
+.reservation-form{
+  max-width:760px;margin:auto;display:grid;
+  grid-template-columns:1fr 1fr;gap:15px;
+}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{
+  font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)
+}
+.field input,.field select{
+  width:100%;padding:17px;background:rgba(255,255,255,.07);
+  color:white;border:1px solid rgba(255,255,255,.2);
+  outline:none;border-radius:0;transition:.25s;
+}
+.field input:focus,.field select:focus{border-color:var(--gold);background:rgba(255,255,255,.1)}
+.field select option{background:#191916;color:white}
+.reservation-form .button{grid-column:1/-1;justify-self:center;margin-top:18px}
+.form-message{
+  grid-column:1/-1;text-align:center;min-height:20px;
+  color:var(--gold);font-size:12px;line-height:1.8;
+}
+
+.contact-strip{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:65px 9%;border-bottom:1px solid var(--line);gap:30px;
+}
+.contact-strip h2{font-family:var(--serif);font-size:32px;font-weight:400}
+.contact-strip p{font-size:11px;color:var(--muted);margin-top:10px}
+
+footer{
+  padding:55px 9%;display:flex;justify-content:space-between;
+  align-items:center;gap:25px;flex-wrap:wrap;
+}
+.footer-logo{font-family:var(--serif);font-size:23px;letter-spacing:2px}
+.footer-logo span{color:var(--gold)}
+footer p{font-size:10px;color:var(--muted);line-height:2}
+.footer-links{display:flex;gap:22px}
+.footer-links a{font-size:10px;color:var(--muted);transition:.2s}
+.footer-links a:hover{color:var(--gold)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+.toast{
+  position:fixed;bottom:25px;right:25px;z-index:500;
+  background:#e8dfd0;color:#111;padding:17px 23px;
+  font-size:12px;transform:translateY(20px);opacity:0;
+  pointer-events:none;transition:.3s;max-width:340px;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:850px){
+  .navbar{padding:19px 6%}
+  .navbar.scrolled{padding:15px 6%}
+  .menu-toggle{display:block}
+  .nav-action{display:none}
+  .nav-links{
+    display:none;position:absolute;top:100%;left:0;width:100%;
+    background:#151512;padding:30px 7%;
+    flex-direction:column;align-items:flex-start;gap:27px;
+    border-bottom:1px solid var(--line);
+  }
+  .nav-links.open{display:flex}
+  .hero{padding:145px 7% 110px}
+  .section{padding:90px 7%}
+  .story{grid-template-columns:1fr;gap:45px}
+  .story-image{height:430px}
+  .menu-grid{gap:30px}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .gallery-item{height:270px}
+  .gallery-item:first-child{grid-column:1/-1}
+}
+@media(max-width:550px){
+  .hero h1{font-size:66px;letter-spacing:-2px}
+  .hero-bottom{font-size:8px}
+  .section{padding:75px 6%}
+  .story-image{height:330px}
+  .stats{margin-top:65px}
+  .stat{padding:25px 5px}
+  .stat strong{font-size:27px}
+  .stat span{font-size:8px;letter-spacing:1px}
+  .menu-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-item,.gallery-item:first-child{grid-column:auto;height:280px}
+  .reservation-form{grid-template-columns:1fr}
+  .reservation-form .button{grid-column:1}
+  .contact-strip{padding:50px 7%;align-items:flex-start;flex-direction:column}
+  footer{padding:45px 7%;flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="navbar" id="navbar">
+  <a href="#accueil" class="logo">MAISON <span>NOIRE.</span></a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#accueil">Accueil</a>
+    <a href="#histoire">Notre maison</a>
+    <a href="#menu">La carte</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#reservation">Réservation</a>
+  </nav>
+  <a class="nav-action" href="#reservation">Réserver une table ↗</a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+</header>
+
+<main>
+<section class="hero" id="accueil">
+  <div class="hero-content">
+    <div class="eyebrow">Restaurant gastronomique · France</div>
+    <h1>L'art de<br>recevoir.<br><em>Autrement.</em></h1>
+    <p class="hero-description">
+      Une cuisine sincère, des produits de saison et une expérience
+      imaginée dans les moindres détails. Bienvenue dans notre maison.
+    </p>
+    <a href="#menu" class="button">Explorer notre carte <span class="arrow">→</span></a>
+  </div>
+  <div class="hero-bottom">
+    <span>Une expérience à part</span>
+    <span>Depuis 2026 · Maison Noire</span>
+  </div>
+</section>
+
+<section class="section" id="histoire">
+  <div class="story">
+    <div class="story-image reveal">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1100&q=85" alt="Intérieur élégant du restaurant">
+    </div>
+    <div class="story-copy reveal">
+      <div class="eyebrow">Notre philosophie</div>
+      <h2>Le goût des<br>belles choses.</h2>
+      <p>Maison Noire est née d'une idée simple : transformer chaque repas en un moment singulier.</p>
+      <p>Notre cuisine célèbre les produits, les saisons et le plaisir du partage. Chaque assiette raconte une histoire, chaque détail compte.</p>
+      <p>Dans un cadre chaleureux et élégant, nous vous invitons à ralentir et profiter de l'instant.</p>
+      <div class="signature">L'équipe Maison Noire</div>
+    </div>
+  </div>
+  <div class="stats reveal">
+    <div class="stat"><strong>01</strong><span>Une maison unique</span></div>
+    <div class="stat"><strong>100%</strong><span>Passion & créativité</span></div>
+    <div class="stat"><strong>SAISON</strong><span>Une carte évolutive</span></div>
+  </div>
+</section>
+
+<section class="section menu-section" id="menu">
+  <div class="section-heading reveal">
+    <div class="eyebrow">L'expression de notre cuisine</div>
+    <h2>La carte.</h2>
+    <p>Une sélection imaginée autour des saisons et des produits.</p>
+  </div>
+
+  <div class="menu-tabs reveal" role="group" aria-label="Catégories de la carte">
+    <button class="menu-tab active" data-category="entrees" aria-pressed="true">Entrées</button>
+    <button class="menu-tab" data-category="plats" aria-pressed="false">Plats</button>
+    <button class="menu-tab" data-category="desserts" aria-pressed="false">Desserts</button>
+  </div>
+  <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+  <p class="menu-note">Carte fictive de démonstration · Prix indicatifs</p>
+</section>
+
+<section class="section" id="galerie">
+  <div class="section-heading reveal">
+    <div class="eyebrow">L'univers Maison Noire</div>
+    <h2>Le plaisir des détails.</h2>
+    <p>Une ambiance, des saveurs et des instants à partager.</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=85" alt="Table gastronomique"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=85" alt="Plat raffiné"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=85" alt="Ambiance du restaurant"></div>
+  </div>
+</section>
+
+<section class="section reservation" id="reservation">
+  <div class="section-heading reveal">
+    <div class="eyebrow">Votre prochaine expérience</div>
+    <h2>Votre table vous attend.</h2>
+    <p>Préparez votre visite chez Maison Noire.</p>
+  </div>
+
+  <form class="reservation-form reveal" id="reservationForm">
+    <div class="field">
+      <label for="customerName">Nom complet</label>
+      <input id="customerName" type="text" placeholder="Votre nom" required maxlength="80">
+    </div>
+    <div class="field">
+      <label for="customerEmail">Adresse e-mail</label>
+      <input id="customerEmail" type="email" placeholder="vous@exemple.fr" required>
+    </div>
+    <div class="field">
+      <label for="reservationDate">Date souhaitée</label>
+      <input id="reservationDate" type="date" required>
+    </div>
+    <div class="field">
+      <label for="reservationTime">Horaire</label>
+      <select id="reservationTime" required>
+        <option value="">Sélectionner</option>
+        <option>12:00</option><option>12:30</option><option>13:00</option>
+        <option>19:00</option><option>19:30</option><option>20:00</option>
+        <option>20:30</option><option>21:00</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="guestCount">Nombre de personnes</label>
+      <select id="guestCount" required>
+        <option value="">Sélectionner</option>
+        <option>1 personne</option><option>2 personnes</option>
+        <option>3 personnes</option><option>4 personnes</option>
+        <option>5 personnes</option><option>6 personnes</option>
+      </select>
+    </div>
+    <button class="button" type="submit">Envoyer ma demande <span class="arrow">→</span></button>
+    <p class="form-message" id="formMessage" aria-live="polite"></p>
+  </form>
+</section>
+
+<section class="contact-strip reveal">
+  <div>
+    <div class="eyebrow">Maison Noire</div>
+    <h2>Le plaisir de vous recevoir.</h2>
+    <p>Une belle expérience commence par une réservation.</p>
+  </div>
+  <a href="#reservation" class="button">Nous rejoindre <span class="arrow">→</span></a>
+</section>
+</main>
+
+<footer>
+  <div>
+    <div class="footer-logo">MAISON <span>NOIRE.</span></div>
+    <p>Restaurant gastronomique · Cuisine contemporaine</p>
+  </div>
+  <div class="footer-links">
+    <a href="#histoire">Notre maison</a>
+    <a href="#menu">La carte</a>
+    <a href="#reservation">Contact</a>
+  </div>
+  <p>Projet fictif réalisé par NOVA AI.<br>© <span id="year"></span> Maison Noire.</p>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photographie agrandie">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">×</button>
+  <img id="lightboxImage" src="" alt="">
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const dishes = {
+  entrees:[
+    ["Velouté de saison","Légumes du marché, crème légère et herbes fraîches","14 €"],
+    ["Œuf parfait","Champignons, noisettes et émulsion délicate","16 €"],
+    ["Tartare de saumon","Agrumes, huile d'olive et condiments","17 €"],
+    ["Carpaccio de bœuf","Parmesan, roquette et vinaigrette maison","18 €"]
+  ],
+  plats:[
+    ["Filet de bœuf","Jus réduit, pommes de terre fondantes et légumes","32 €"],
+    ["Poisson du jour","Cuisson douce, beurre blanc et légumes de saison","29 €"],
+    ["Risotto crémeux","Champignons, parmesan et huile de truffe","25 €"],
+    ["Volaille fermière","Jus aux herbes et purée maison","27 €"]
+  ],
+  desserts:[
+    ["Fondant au chocolat","Cœur coulant et glace vanille","12 €"],
+    ["Tarte aux fruits","Fruits de saison et crème légère","11 €"],
+    ["Crème brûlée","Vanille naturelle et fine croûte caramélisée","10 €"],
+    ["Assiette gourmande","Sélection de douceurs maison","14 €"]
+  ]
+};
+
+const menuGrid=document.getElementById("menuGrid");
+
+function showMenu(category){
+  menuGrid.innerHTML=dishes[category].map((dish,index)=>`
+    <article class="dish" style="animation-delay:${index*70}ms">
+      <div><h3>${dish[0]}</h3><p>${dish[1]}</p></div>
+      <span class="dish-price">${dish[2]}</span>
+    </article>
+  `).join("");
+}
+
+showMenu("entrees");
+
+document.querySelectorAll(".menu-tab").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".menu-tab").forEach(tab=>{
+      tab.classList.remove("active");
+      tab.setAttribute("aria-pressed","false");
+    });
+    button.classList.add("active");
+    button.setAttribute("aria-pressed","true");
+    showMenu(button.dataset.category);
+  });
+});
+
+// Navigation mobile
+const navbar=document.getElementById("navbar");
+const navLinks=document.getElementById("navLinks");
+const toggle=document.getElementById("menuToggle");
+
+toggle.addEventListener("click",()=>{
+  const opened=navLinks.classList.toggle("open");
+  toggle.setAttribute("aria-expanded",String(opened));
+  toggle.textContent=opened?"×":"☰";
+});
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+  link.addEventListener("click",()=>{
+    navLinks.classList.remove("open");
+    toggle.setAttribute("aria-expanded","false");
+    toggle.textContent="☰";
+  });
+});
+
+// Barre de progression et navbar
+function updateScroll(){
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  const percent=max>0?(window.scrollY/max)*100:0;
+  document.getElementById("progress").style.width=percent+"%";
+  navbar.classList.toggle("scrolled",window.scrollY>40);
+}
+window.addEventListener("scroll",updateScroll,{passive:true});
+updateScroll();
+
+// Animations d'apparition
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+// Galerie plein écran
+const lightbox=document.getElementById("lightbox");
+const lightboxImage=document.getElementById("lightboxImage");
+
+document.querySelectorAll(".gallery-item img").forEach(img=>{
+  img.addEventListener("click",()=>{
+    lightboxImage.src=img.src;
+    lightboxImage.alt=img.alt;
+    lightbox.classList.add("open");
+    document.body.classList.add("locked");
+  });
+});
+
+function closeLightbox(){
+  lightbox.classList.remove("open");
+  document.body.classList.remove("locked");
+}
+document.getElementById("lightboxClose").addEventListener("click",closeLightbox);
+lightbox.addEventListener("click",event=>{
+  if(event.target===lightbox)closeLightbox();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape")closeLightbox();
+});
+
+// Réservation de démonstration
+const dateInput=document.getElementById("reservationDate");
+const today=new Date();
+const localToday=new Date(today.getTime()-today.getTimezoneOffset()*60000)
+  .toISOString().split("T")[0];
+dateInput.min=localToday;
+
+document.getElementById("reservationForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  const name=document.getElementById("customerName").value.trim();
+  const email=document.getElementById("customerEmail").value.trim();
+  const date=dateInput.value;
+  const time=document.getElementById("reservationTime").value;
+  const guests=document.getElementById("guestCount").value;
+  const message=document.getElementById("formMessage");
+
+  if(!name||!email||!date||!time||!guests){
+    message.textContent="Merci de compléter tous les champs.";
+    return;
+  }
+
+  message.textContent=
+    `Merci ${name} ! Votre demande pour ${guests}, le ${date} à ${time}, est bien simulée.`;
+
+  showToast("Demande de démonstration enregistrée à l'écran.");
+});
+
+function showToast(text){
+  const toast=document.getElementById("toast");
+  toast.textContent=text;
+  toast.classList.add("show");
+  window.setTimeout(()=>toast.classList.remove("show"),3500);
+}
+
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
