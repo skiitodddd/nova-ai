@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOVA Assistant — AI Customer Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c12;--panel:#14141e;--panel2:#1b1b29;--line:#29293b;--text:#f5f5fa;--muted:#9999ad;--purple:#8b72ff;--cyan:#6ee7e0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:1250px;margin:auto;padding:25px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:15px 0 25px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-family:'Space Grotesk';font-size:21px;font-weight:700}
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#9278ff,#5c4ac9);display:grid;place-items:center;font-weight:700}
+.status{font-size:12px;color:var(--cyan);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:22px;margin-top:25px}
+.sidebar,.chat{background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.sidebar{padding:22px;height:fit-content}
+.label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:15px}
+.business{padding:16px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;margin-bottom:25px}
+.business strong{display:block;font-family:'Space Grotesk';margin-bottom:5px}
+.business span{font-size:11px;color:var(--muted)}
+.side-button{width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:12px;border-radius:9px;font-size:13px;margin:3px 0}
+.side-button:hover{background:var(--panel2);color:white}
+.side-button.active{background:#292345;color:#c4b8ff}
+.notice{font-size:11px;color:var(--muted);line-height:1.8;margin-top:28px}
+.chat{height:calc(100vh - 145px);min-height:600px;display:flex;flex-direction:column;overflow:hidden}
+.chat-header{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:13px}
+.avatar{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#8870ff,#5141a9);display:grid;place-items:center;font-weight:700}
+.chat-header strong{font-size:14px}
+.chat-header small{display:block;color:var(--cyan);font-size:11px;margin-top:4px}
+.messages{flex:1;overflow-y:auto;padding:25px;display:flex;flex-direction:column;gap:18px}
+.message{display:flex;gap:10px;max-width:80%;animation:appear .25s ease}
+.message.user{align-self:flex-end;flex-direction:row-reverse}
+.bubble{padding:14px 16px;border:1px solid var(--line);background:var(--panel2);border-radius:5px 15px 15px 15px;font-size:13px;line-height:1.7;white-space:pre-wrap}
+.user .bubble{background:#30275a;border-color:#4a3b7f;border-radius:15px 5px 15px 15px}
+.mini-avatar{width:30px;height:30px;flex-shrink:0;border-radius:10px;background:#292345;display:grid;place-items:center;font-size:12px}
+.user .mini-avatar{background:#303047}
+.time{font-size:9px;color:var(--muted);margin-top:7px}
+.suggestions{padding:0 24px 15px;display:flex;gap:8px;flex-wrap:wrap}
+.suggestion{border:1px solid var(--line);background:none;color:#c2b7ff;border-radius:30px;padding:9px 13px;font-size:11px}
+.suggestion:hover{background:#292345}
+.typing{display:none;align-items:center;gap:5px;padding:0 25px 14px;color:var(--muted);font-size:11px}
+.typing.show{display:flex}
+.typing i{width:5px;height:5px;border-radius:50%;background:var(--purple);animation:blink .8s infinite alternate}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+.composer{padding:18px 22px;border-top:1px solid var(--line);display:flex;gap:12px}
+.composer input{flex:1;min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:15px;color:white;outline:none}
+.composer input:focus{border-color:var(--purple)}
+.send{width:50px;border:0;border-radius:12px;background:var(--purple);color:white;font-size:20px}
+.send:hover{filter:brightness(1.15)}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{to{opacity:.25;transform:translateY(-3px)}}
+@media(max-width:750px){.layout{grid-template-columns:1fr}.sidebar{display:none}.chat{height:75vh;min-height:520px}.app{padding:14px}.message{max-width:95%}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+ <div class="brand"><div class="logo">N</div>NOVA <span style="color:#9b87ff">ASSISTANT</span></div>
+ <div class="status"><span class="dot"></span> Assistant en ligne</div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+ <div class="label">Espace client</div>
+ <div class="business"><strong>Maison Exemple</strong><span>Assistant commercial de démonstration</span></div>
+ <div class="label">Questions rapides</div>
+ <button class="side-button active" data-q="Quels sont vos horaires ?">Horaires d'ouverture</button>
+ <button class="side-button" data-q="Quels sont vos tarifs ?">Tarifs et services</button>
+ <button class="side-button" data-q="Comment vous contacter ?">Contact</button>
+ <button class="side-button" data-q="Où êtes-vous situés ?">Localisation</button>
+ <div class="notice">NOVA Assistant<br>Une démonstration d'assistance client automatisée conçue par NOVA AI.</div>
+</aside>
+
+<section class="chat">
+ <div class="chat-header">
+  <div class="avatar">N</div>
+  <div><strong>Assistant NOVA</strong><small>● Disponible pour vous aider</small></div>
+ </div>
+ <div class="messages" id="messages" aria-live="polite"></div>
+ <div class="typing" id="typing">L'assistant écrit <i></i><i></i><i></i></div>
+ <div class="suggestions">
+  <button class="suggestion" data-q="Quels sont vos horaires ?">Vos horaires ?</button>
+  <button class="suggestion" data-q="Quels sont vos tarifs ?">Vos tarifs ?</button>
+  <button class="suggestion" data-q="Comment vous contacter ?">Vous contacter ?</button>
+ </div>
+ <form class="composer" id="chatForm">
+  <input id="chatInput" placeholder="Écrivez votre message..." autocomplete="off" maxlength="500">
+  <button class="send" aria-label="Envoyer">➤</button>
+ </form>
+</section>
+</div>
+</div>
+
+<script>
+const messages=document.getElementById("messages");
+const input=document.getElementById("chatInput");
+const typing=document.getElementById("typing");
+
+function addMessage(text,type){
+ const row=document.createElement("div");
+ row.className="message "+type;
+ const avatar=document.createElement("div");
+ avatar.className="mini-avatar";
+ avatar.textContent=type==="user"?"VO":"N";
+ const content=document.createElement("div");
+ const bubble=document.createElement("div");
+ bubble.className="bubble";
+ bubble.textContent=text;
+ const time=document.createElement("div");
+ time.className="time";
+ time.textContent=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
+ content.append(bubble,time);
+ row.append(avatar,content);
+ messages.append(row);
+ messages.scrollTop=messages.scrollHeight;
+}
+
+function getAnswer(message){
+ const q=message.toLowerCase();
+ if(/bonjour|salut|hello|bonsoir/.test(q))return "Bonjour et bienvenue ! Je suis l'assistant virtuel NOVA. Comment puis-je vous aider aujourd'hui ?";
+ if(/horaire|ouvert|fermé|heure/.test(q))return "Nos horaires de démonstration sont :\n\nLundi – Vendredi : 09h00 à 18h00\nSamedi : 10h00 à 16h00\nDimanche : fermé.\n\nCes horaires sont fictifs pour cette démonstration.";
+ if(/prix|tarif|coût|combien/.test(q))return "Voici nos offres de démonstration :\n\n• Service Starter : à partir de 49 €\n• Service Business : à partir de 99 €\n• Offre Premium : sur devis.\n\nLes prix sont fictifs et servent uniquement à illustrer le chatbot.";
+ if(/contact|email|téléphone|appeler/.test(q))return "Vous pouvez nous contacter via le formulaire de contact du site. Un membre de notre équipe pourra ensuite vous répondre.\n\nCette interface est une démonstration sans boîte mail connectée.";
+ if(/adresse|localisation|situé|trouver/.test(q))return "Nous sommes une entreprise fictive créée pour présenter les capacités de NOVA Assistant. Aucune adresse réelle n'est associée à cette démo.";
+ if(/service|propose|offre/.test(q))return "Nous proposons plusieurs services de démonstration : conseil, accompagnement, création de solutions numériques et assistance client.";
+ if(/merci/.test(q))return "Avec plaisir ! Je reste disponible si vous avez d'autres questions.";
+ if(/humain|personne|conseiller/.test(q))return "Bien sûr ! Dans une installation réelle, je pourrais transmettre votre demande à un conseiller. Ici, le transfert est simulé.";
+ return "Merci pour votre message ! Je n'ai pas trouvé de réponse exacte dans ma base de connaissances. Vous pouvez essayer de reformuler votre question ou choisir l'une des suggestions.";
+}
+
+function sendMessage(text){
+ text=text.trim();
+ if(!text)return;
+ addMessage(text,"user");
+ input.value="";
+ typing.classList.add("show");
+ setTimeout(()=>{
+  typing.classList.remove("show");
+  addMessage(getAnswer(text),"bot");
+ },650+Math.random()*500);
+}
+
+document.getElementById("chatForm").addEventListener("submit",e=>{
+ e.preventDefault();sendMessage(input.value);
+});
+document.querySelectorAll("[data-q]").forEach(button=>{
+ button.addEventListener("click",()=>sendMessage(button.dataset.q));
+});
+addMessage("Bonjour et bienvenue ! Je suis l'assistant virtuel de démonstration NOVA. Posez-moi une question sur nos horaires, nos tarifs ou nos services.","bot");
+</script>
+</body>
+</html>
