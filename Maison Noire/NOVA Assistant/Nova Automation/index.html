@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOVA Flow — Automation Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d12;--panel:#131720;--panel2:#191f2b;--line:#252e3d;--text:#edf1f8;--muted:#8995a8;--purple:#9177ff;--blue:#63a7ff;--green:#56d6a0;--orange:#e9b46a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}
+.sidebar{background:#10141c;border-right:1px solid var(--line);padding:27px 18px}
+.brand{font:700 21px 'Space Grotesk';display:flex;align-items:center;gap:11px;margin-bottom:45px;padding-left:8px}
+.logo{width:36px;height:36px;background:linear-gradient(135deg,#9278ff,#4d6ce3);border-radius:11px;display:grid;place-items:center}
+.brand span{color:var(--purple)}
+.group-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin:25px 10px 10px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:13px 12px;border-radius:9px;color:var(--muted);font-size:13px;margin:4px 0;border:0;background:none;width:100%;text-align:left}
+.nav-item:hover,.nav-item.active{background:#24203d;color:#c5b9ff}
+.nav-icon{font-size:17px;width:20px;text-align:center}
+.sidebar-bottom{margin-top:60px;padding:15px;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:11px;line-height:1.8}
+.main{padding:30px 4%;max-width:1600px;width:100%;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:32px}
+h1{font:600 27px 'Space Grotesk'}
+.subtitle{color:var(--muted);font-size:12px;margin-top:7px}
+.top-right{display:flex;align-items:center;gap:13px}
+.pill{border:1px solid var(--line);padding:9px 13px;border-radius:30px;color:var(--green);font-size:11px}
+.avatar{width:36px;height:36px;border-radius:50%;background:#302a51;display:grid;place-items:center;color:#c8bbff;font-weight:700}
+.page{display:none}
+.page.active{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:20px}
+.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.stat-icon{font-size:18px}
+.stat-number{font:600 30px 'Space Grotesk';margin:18px 0 7px}
+.stat-foot{font-size:10px;color:var(--green)}
+.section-title{font:600 17px 'Space Grotesk';margin-bottom:7px}
+.section-desc{font-size:11px;color:var(--muted);margin-bottom:20px}
+.dashboard-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.workflow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:25px 0}
+.node{min-width:110px;flex:1;text-align:center;padding:17px 8px;border:1px solid var(--line);background:var(--panel2);border-radius:10px}
+.node .node-icon{font-size:21px;margin-bottom:9px}
+.node strong{font-size:11px;display:block}
+.node small{font-size:9px;color:var(--muted);display:block;margin-top:6px}
+.arrow{color:var(--purple);font-size:20px}
+.node.done{border-color:var(--green);background:#14251f}
+.node.running{border-color:var(--purple);box-shadow:0 0 20px #9177ff22}
+.primary{background:var(--purple);color:white;border:0;border-radius:8px;padding:12px 17px;font-size:11px;font-weight:700;transition:.2s}
+.primary:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:11px 15px;font-size:11px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.activity{display:flex;flex-direction:column;gap:17px}
+.activity-item{display:flex;gap:12px;align-items:flex-start}
+.activity-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:9px;background:#24203d}
+.activity-item strong{font-size:11px;display:block}
+.activity-item small{font-size:10px;color:var(--muted);display:block;margin-top:5px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:550px}
+th{text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:14px;border-bottom:1px solid var(--line)}
+td{font-size:11px;padding:15px 14px;border-bottom:1px solid var(--line)}
+.status{padding:6px 9px;border-radius:20px;font-size:9px;background:#202d3b;color:var(--blue)}
+.status.done{background:#183328;color:var(--green)}
+.status.wait{background:#3a3021;color:var(--orange)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:10px;color:var(--muted)}
+.field input,.field select,.field textarea{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px;color:white;outline:none}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--purple)}
+.field.full{grid-column:1/-1}
+.workflow-log{display:flex;flex-direction:column;gap:13px}
+.log{padding:14px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);font-size:11px;line-height:1.7}
+.log span{color:var(--muted);font-size:10px}
+.toast{position:fixed;right:25px;bottom:25px;background:#e9e5ff;color:#171322;padding:15px 20px;border-radius:9px;font-size:12px;opacity:0;transform:translateY(12px);transition:.3s;pointer-events:none;z-index:10}
+.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:950px){.app{grid-template-columns:75px 1fr}.sidebar{padding:25px 10px}.brand{font-size:0;padding:0;justify-content:center}.brand .logo{flex-shrink:0}.nav-item{justify-content:center;font-size:0}.nav-icon{font-size:18px}.group-label,.sidebar-bottom{display:none}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.app{grid-template-columns:1fr}.sidebar{position:sticky;top:0;z-index:5;display:flex;padding:9px;justify-content:center;border-right:0;border-bottom:1px solid var(--line)}.brand{display:none}.nav-item{margin:0;padding:12px;flex:1}.main{padding:22px 14px}.top{align-items:flex-start}h1{font-size:21px}.top-right .pill{display:none}.stats{gap:9px}.card{padding:14px}.stat-number{font-size:24px}.dashboard-grid{grid-template-columns:1fr}.workflow{flex-direction:column}.arrow{transform:rotate(90deg)}.node{width:100%}.form-grid{grid-template-columns:1fr}.field.full{grid-column:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><div class="logo">N</div>NOVA <span>FLOW</span></div>
+ <div class="group-label">WORKSPACE</div>
+ <button class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+ <button class="nav-item" data-page="requests"><span class="nav-icon">▤</span>Demandes clients</button>
+ <button class="nav-item" data-page="workflows"><span class="nav-icon">◇</span>Automatisations</button>
+ <button class="nav-item" data-page="history"><span class="nav-icon">◷</span>Historique</button>
+ <div class="sidebar-bottom">NOVA FLOW<br>Automation workspace<br><span style="color:var(--purple)">Version démo 1.0</span></div>
+</aside>
+
+<main class="main">
+<header class="top">
+ <div><h1 id="pageTitle">Dashboard</h1><p class="subtitle" id="pageSubtitle">Vue globale de votre activité automatisée.</p></div>
+ <div class="top-right"><div class="pill">● Système opérationnel</div><div class="avatar">N</div></div>
+</header>
+
+<section class="page active" id="dashboard">
+ <div class="stats">
+  <div class="card"><div class="stat-top">Demandes reçues <span class="stat-icon">📥</span></div><div class="stat-number" id="totalStat">0</div><div class="stat-foot">Total des demandes de la démo</div></div>
+  <div class="card"><div class="stat-top">Traitées <span class="stat-icon">✓</span></div><div class="stat-number" id="doneStat">0</div><div class="stat-foot">Automatisations terminées</div></div>
+  <div class="card"><div class="stat-top">En attente <span class="stat-icon">◷</span></div><div class="stat-number" id="pendingStat">0</div><div class="stat-foot" style="color:var(--orange)">À examiner</div></div>
+  <div class="card"><div class="stat-top">Taux de traitement <span class="stat-icon">↗</span></div><div class="stat-number" id="rateStat">0%</div><div class="stat-foot">Sur les demandes enregistrées</div></div>
+ </div>
+ <div class="dashboard-grid">
+  <div class="card">
+   <div class="section-title">Workflow principal</div>
+   <div class="section-desc">Circuit de traitement automatique des demandes clients.</div>
+   <div class="workflow">
+    <div class="node" id="n1"><div class="node-icon">📩</div><strong>Réception</strong><small>Nouvelle demande</small></div>
+    <span class="arrow">→</span>
+    <div class="node" id="n2"><div class="node-icon">⚙️</div><strong>Analyse</strong><small>Catégorisation</small></div>
+    <span class="arrow">→</span>
+    <div class="node" id="n3"><div class="node-icon">📂</div><strong>Organisation</strong><small>Enregistrement</small></div>
+    <span class="arrow">→</span>
+    <div class="node" id="n4"><div class="node-icon">✓</div><strong>Terminé</strong><small>Traitement final</small></div>
+   </div>
+   <div class="actions">
+    <button class="primary" id="runWorkflow">▶ Lancer le workflow</button>
+    <button class="secondary" id="resetWorkflow">Réinitialiser</button>
+   </div>
+  </div>
+  <div class="card">
+   <div class="section-title">Activité récente</div>
+   <div class="section-desc">Les dernières opérations du système.</div>
+   <div class="activity" id="recentActivity"></div>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="requests">
+ <div class="card">
+  <div class="section-title">Nouvelle demande client</div>
+  <div class="section-desc">Ajoutez une demande pour tester le circuit automatisé.</div>
+  <form id="requestForm" class="form-grid">
+   <div class="field"><label>Nom du client</label><input id="clientName" placeholder="Ex. Alex Martin" required maxlength="80"></div>
+   <div class="field"><label>Adresse e-mail</label><input id="clientEmail" type="email" placeholder="alex@exemple.fr" required></div>
+   <div class="field"><label>Type de demande</label><select id="clientType"><option>Demande de devis</option><option>Support technique</option><option>Question commerciale</option><option>Autre demande</option></select></div>
+   <div class="field"><label>Priorité</label><select id="clientPriority"><option>Normale</option><option>Haute</option><option>Basse</option></select></div>
+   <div class="field full"><label>Message</label><textarea id="clientMessage" placeholder="Décrivez la demande du client..." required maxlength="1000"></textarea></div>
+   <div class="field full"><button class="primary">+ Enregistrer la demande</button></div>
+  </form>
+ </div>
+ <div class="card" style="margin-top:18px">
+  <div class="section-title">Toutes les demandes</div>
+  <div class="section-desc">Données de démonstration enregistrées dans cette session.</div>
+  <div class="table-wrap"><table><thead><tr><th>Client</th><th>Demande</th><th>Priorité</th><th>Statut</th></tr></thead><tbody id="requestRows"></tbody></table></div>
+ </div>
+</section>
+
+<section class="page" id="workflows">
+ <div class="card">
+  <div class="section-title">Automatisations disponibles</div>
+  <div class="section-desc">Exemples de workflows que NOVA AI pourrait configurer pour une entreprise.</div>
+  <div class="workflow-log" id="workflowList">
+   <div class="log"><strong>📩 Traitement des demandes entrantes</strong><br>Réception → Analyse → Organisation → Finalisation<br><span>Actif · Démonstration</span></div>
+   <div class="log"><strong>📊 Qualification des prospects</strong><br>Formulaire → Catégorisation → Priorité → Suivi<br><span>Prêt à être testé</span></div>
+   <div class="log"><strong>🔔 Alerte de nouvelle demande</strong><br>Nouvelle demande → Notification simulée<br><span>Prêt à être testé</span></div>
+  </div>
+  <div class="actions"><button class="primary" id="testAutomation">Tester une automatisation</button></div>
+ </div>
+</section>
+
+<section class="page" id="history">
+ <div class="card">
+  <div class="section-title">Journal des opérations</div>
+  <div class="section-desc">Historique des événements de cette session.</div>
+  <div class="workflow-log" id="historyList"></div>
+ </div>
+</section>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let requests=[];
+let logs=[];
+let running=false;
+
+const titles={
+ dashboard:["Dashboard","Vue globale de votre activité automatisée."],
+ requests:["Demandes clients","Enregistrez et consultez les demandes entrantes."],
+ workflows:["Automatisations","Gérez vos scénarios de traitement."],
+ history:["Historique","Consultez les événements de votre espace."]
+};
+
+function notify(message){
+ const toast=document.getElementById("toast");
+ toast.textContent=message;toast.classList.add("show");
+ setTimeout(()=>toast.classList.remove("show"),2800);
+}
+
+function log(message){
+ logs.unshift({message,time:new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})});
+ renderLogs();
+}
+
+function renderLogs(){
+ document.getElementById("historyList").innerHTML=logs.length
+ ?logs.map(x=>`<div class="log">${escapeHTML(x.message)}<br><span>${x.time}</span></div>`).join("")
+ :'<div class="log">Aucune opération pour le moment.</div>';
+
+ document.getElementById("recentActivity").innerHTML=logs.slice(0,4).map(x=>
+ `<div class="activity-item"><div class="activity-icon">⚡</div><div><strong>${escapeHTML(x.message)}</strong><small>${x.time}</small></div></div>`
+ ).join("")||'<p style="color:var(--muted);font-size:11px">Aucune activité récente.</p>';
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,char=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[char]);
+}
+
+function renderRequests(){
+ document.getElementById("requestRows").innerHTML=requests.map(r=>`
+ <tr>
+ <td>${escapeHTML(r.name)}<br><span style="color:var(--muted)">${escapeHTML(r.email)}</span></td>
+ <td>${escapeHTML(r.type)}</td>
+ <td>${escapeHTML(r.priority)}</td>
+ <td><span class="status ${r.done?"done":"wait"}">${r.done?"Traitée":"En attente"}</span></td>
+ </tr>`).join("")||'<tr><td colspan="4" style="color:var(--muted)">Aucune demande enregistrée.</td></tr>';
+ document.getElementById("totalStat").textContent=requests.length;
+ const done=requests.filter(r=>r.done).length;
+ document.getElementById("doneStat").textContent=done;
+ document.getElementById("pendingStat").textContent=requests.length-done;
+ document.getElementById("rateStat").textContent=requests.length?Math.round(done/requests.length*100)+"%":"0%";
+}
+
+document.querySelectorAll(".nav-item").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  button.classList.add("active");
+  document.getElementById(button.dataset.page).classList.add("active");
+  document.getElementById("pageTitle").textContent=titles[button.dataset.page][0];
+  document.getElementById("pageSubtitle").textContent=titles[button.dataset.page][1];
+ });
+});
+
+document.getElementById("requestForm").addEventListener("submit",event=>{
+ event.preventDefault();
+ const request={
+  id:Date.now(),
+  name:document.getElementById("clientName").value.trim(),
+  email:document.getElementById("clientEmail").value.trim(),
+  type:document.getElementById("clientType").value,
+  priority:document.getElementById("clientPriority").value,
+  message:document.getElementById("clientMessage").value.trim(),
+  done:false
+ };
+ if(!request.name||!request.email||!request.message)return;
+ requests.unshift(request);
+ event.target.reset();
+ renderRequests();
+ log("Nouvelle demande enregistrée : "+request.name);
+ notify("Demande enregistrée avec succès.");
+});
+
+function setNode(index,state){
+ const node=document.getElementById("n"+index);
+ node.classList.remove("done","running");
+ if(state)node.classList.add(state);
+}
+
+function delay(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+
+document.getElementById("runWorkflow").addEventListener("click",async()=>{
+ if(running)return;
+ if(!requests.length){
+  notify("Ajoutez d'abord une demande client.");
+  return;
+ }
+ running=true;
+ const button=document.getElementById("runWorkflow");
+ button.disabled=true;button.textContent="Traitement en cours...";
+ [1,2,3,4].forEach(i=>setNode(i,""));
+ const request=requests.find(r=>!r.done)||requests[0];
+ log("Workflow lancé pour "+request.name);
+ for(let i=1;i<=4;i++){
+  setNode(i,"running");
+  await delay(650);
+  setNode(i,"done");
+  log(["Réception de la demande","Analyse de la demande","Organisation des informations","Traitement terminé"][i-1]+" — "+request.name);
+ }
+ request.done=true;
+ renderRequests();
+ notify("Workflow terminé pour "+request.name+" !");
+ button.disabled=false;button.textContent="▶ Lancer le workflow";
+ running=false;
+});
+
+document.getElementById("resetWorkflow").addEventListener("click",()=>{
+ [1,2,3,4].forEach(i=>setNode(i,""));
+ notify("Affichage du workflow réinitialisé.");
+});
+
+document.getElementById("testAutomation").addEventListener("click",async()=>{
+ const button=document.getElementById("testAutomation");
+ button.disabled=true;button.textContent="Test en cours...";
+ log("Test de qualification des prospects démarré.");
+ await delay(900);
+ log("Qualification terminée : scénario de démonstration exécuté.");
+ notify("Test d'automatisation terminé !");
+ button.disabled=false;button.textContent="Tester une automatisation";
+});
+
+renderRequests();
+renderLogs();
+</script>
+</body>
+</html>
